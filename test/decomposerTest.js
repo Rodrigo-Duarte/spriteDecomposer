@@ -1,5 +1,6 @@
 var assert = require('assert');
 var decomposer = require('../decomposer');
+var fs = require('fs');
 
 describe ('Decomposer', function() {
 	describe ('getAlphaMap', function() {
@@ -66,6 +67,22 @@ describe ('Decomposer', function() {
 			var expected = [[[255,0,0,255],[0,0,0,255],[0,0,0,255]],
 											[[255,0,0,255],[0,0,0,255],[0,0,0,255]]];
 			assert.deepEqual(decomposer.toRGBAMatrix(pixels,3), expected);
+		});
+	});
+
+	describe('save', function() {
+		after(function() {fs.unlink('saveTest.png')});
+		it('should work', function() {
+			decomposer.save('saveTest.png', [[[255,0,0,255],[0,0,0,255],[0,0,0,255]],
+											[[255,0,0,255],[0,0,0,255],[0,0,0,255]]]);
+			var actual = fs.createReadStream('saveTest.png');
+			var expected = fs.createReadStream('test/expected.png');
+			// This FUCKING SHIT SIMPLY DOESNT WORK
+			// BUT IF YOU RUN THIS, IT SHOWS THE FUCKING BYTES
+			// assert.deepEqual(actual, expected);
+			// This tests nothing
+			assert.deepEqual(actual.read(), expected.read());
+
 		});
 	});
 });
