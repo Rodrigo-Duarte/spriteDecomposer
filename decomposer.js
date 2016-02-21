@@ -40,5 +40,22 @@ module.exports = {
 	},
 	verticalCut: function(alphaMatrix) {
 		return getCutPoints(_.zip.apply(_, alphaMatrix));
+	},
+	crop: function(matrix, a, b) {
+		var chain = _.chain(matrix)
+		.filter(function(row, ind) {return ind >= a[0] && ind <= b[0]})
+		.map(function(row) { return _.filter(row, function(cell, ind) {return ind >= a[1] && ind <= b[1]});});
+		return chain.value();
+	},
+	toRGBAMatrix: function(pixels, width) {
+		var w = 4;
+		var fun = function(memo, el, ind) {
+			var group = memo[Math.floor(ind/w)] || memo[memo.push([])-1];
+			group.push(el);
+			return memo;
+		};
+		var rgbaArray = _.reduce(pixels, fun, []);
+		w = width; //doidera
+		return _.reduce(rgbaArray, fun, []);
 	}
 };
