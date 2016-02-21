@@ -3,6 +3,8 @@
     "png-js" : "*",
     "zpad": "*",
     "underscore": "*",
-    "node-png" :"*"
+    "node-png" :"*",
+    "formidable" : "*",
+    "zip-folder" : "*"
   }
 }
