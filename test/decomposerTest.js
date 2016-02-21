@@ -28,9 +28,10 @@ describe ('Decomposer', function() {
 			var input = [[0,0,0,0,0],
 									 [0,0,0,0,0],
 									 [0,0,0,0,0],
+									 [1,0,0,0,0],
 									 [0,0,0,0,0],
 									 [0,0,0,0,0]];
-			assert.deepEqual(decomposer.horizontalCut(input), [0, 4]);
+			assert.deepEqual(decomposer.horizontalCut(input), [2, 4]);
 		});
 	});
 

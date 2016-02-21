@@ -23,7 +23,8 @@ function getCutPoints(matrix) {
 		return memo;
 	}, []);
 	return _.filter(allZeroRows, function(el,ind,list) {
-		return list[ind-1] != el - 1 || el + 1 != list[ind+1];
+		return (typeof list[ind-1] !== 'undefined' && list[ind-1] != el - 1) 
+				|| (typeof list[ind+1] !== 'undefined' && el + 1 != list[ind+1]);
 	});
 }
 
