@@ -23,6 +23,17 @@ describe ('Decomposer', function() {
 		});
 	});
 
+	describe ('horizontalCut', function() {
+		it('should ignore multiple spaces', function() {
+			var input = [[0,0,0,0,0],
+									 [0,0,0,0,0],
+									 [0,0,0,0,0],
+									 [0,0,0,0,0],
+									 [0,0,0,0,0]];
+			assert.deepEqual(decomposer.horizontalCut(input), [0, 4]);
+		});
+	});
+
 	describe ('verticalCut', function() {
 		it('should return X cut points', function() {
 			var input = [[0,0,0,0,0],

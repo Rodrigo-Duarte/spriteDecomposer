@@ -17,32 +17,27 @@ function listToMatrix(list, elementsPerSubArray) {
 }
 
 function getCutPoints(matrix) {
-	var cutPoints = [];
-		for (var i = 0; i < matrix.length; i++) {
-			if (matrix[i].every(function(elem) {
-					return elem === 0
-				}))
-				cutPoints.push(i);
-		}
-		return cutPoints;
+	var isZero = function(el) {return el === 0};
+	var allZeroRows = _.reduce(matrix, function(memo, el, ind) {
+		if (el.every(isZero)) memo.push(ind);
+		return memo;
+	}, []);
+	return _.filter(allZeroRows, function(el,ind,list) {
+		return list[ind-1] != el - 1 || el + 1 != list[ind+1];
+	});
 }
 
 module.exports = {
 	getAlphaMap: function(pixels, width) {
-		var alphaArray = [];
-		for (var i = 3; i < pixels.length; i += 4) {
-			alphaArray.push(pixels[i]);
-		}
-
-		return listToMatrix(alphaArray, width);
+		var alphas = _.filter(pixels, function(el, index) {
+			return (index + 1) % 4 === 0
+		});
+		return listToMatrix(alphas, width);
 	},
 	horizontalCut: function(alphaMatrix) {
 		return getCutPoints(alphaMatrix);
 	},
 	verticalCut: function(alphaMatrix) {
-		return getCutPoints(_.zip.apply(_,alphaMatrix));
+		return getCutPoints(_.zip.apply(_, alphaMatrix));
 	}
 };
-
-0, 32, 64, 96,
-1, 33, 65, 97
